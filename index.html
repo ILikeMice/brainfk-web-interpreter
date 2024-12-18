@@ -5,10 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brainfuck Interpreter</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </head>
-<body >
-    <textarea id="code" placeholder="Enter Brainfuck code here..."></textarea>
+<body style="padding: 0; margin: 0; overflow: hidden;">
+    <div class="containerwrapper">
+        <div style=" height: 30px; width: 100%; background-color: transparent; vertical-align: middle; padding-bottom: 10px; overflow: hidden; display: flex; flex-direction: row;">
+            <button id="runbtn">Run</button>
+            <button id="stopbtn">Stop</button>
+            <input type="text" id="inputtext" placeholder="Input..." >
+        </div>
+        <div class="container">
+            <div id="codewrapper">
+                <div id="linenums"></div>
+                <textarea id="code" placeholder="Enter Brainfuck code here..."></textarea>
+            </div>
+            <div class="separator" id="separator"></div>
+            <div class="output" id="output">Output...</div>
+        </div>
+    </div>
     
 </body>
 </html>
