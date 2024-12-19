@@ -151,10 +151,5 @@ router.get("/", async (req, res) => {
 })
 
 
-
-let interpreter = new Interpreter("++++++++++++++>++++++.<.");
-console.log(interpreter.expr());
-
-
 app.use("/functions/interpreter", router);
 module.exports.handler = serverless(app);
