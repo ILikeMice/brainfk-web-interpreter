@@ -151,5 +151,5 @@ router.get("/", async (req, res) => {
 })
 
 
-app.use("/functions/interpreter", router);
+app.use("/.netlify/functions/interpreter", router);
 module.exports.handler = serverless(app);
