@@ -3,8 +3,7 @@ const codeWrapper = document.getElementById("codewrapper");
 const output = document.getElementById("output");
 const code = document.getElementById("code");
 const lineNums = document.getElementById("linenums");
-const runBtn = document.getElementById("runbtn")
-
+const runBtn = document.getElementById("runbtn");
 
 separator.addEventListener("mousedown", (e) => {
     e.preventDefault();
@@ -12,22 +11,22 @@ separator.addEventListener("mousedown", (e) => {
     document.addEventListener("mouseup", stopResize);
 });
 
-runBtn.addEventListener("click", async function() {
+runBtn.addEventListener("click", async function () {
     output.innerHTML = "";
-    let res = await fetch("/interpreter")
-    let data = await res.json()
-    console.log(data)
-})
+    let res = await fetch("/interpreter");
+    
+    console.log(res);
+});
 
 function resize(e) {
     const container = document.querySelector(".container");
     const containerWidth = container.offsetWidth;
     const containerLeft = container.getBoundingClientRect().left;
-    const newWidth = (e.pageX - containerLeft) / containerWidth * 100;
-    
+    const newWidth = ((e.pageX - containerLeft) / containerWidth) * 100;
+
     if (newWidth >= 0 && newWidth <= 100) {
         codeWrapper.style.width = newWidth + "%";
-        output.style.width = (100 - newWidth) + "%";
+        output.style.width = 100 - newWidth + "%";
     }
 }
 
@@ -46,7 +45,6 @@ function updateLineNumbers() {
         lineNums.appendChild(lineNumber);
     }
 }
-
 
 code.addEventListener("input", updateLineNumbers);
 code.addEventListener("scroll", () => {
