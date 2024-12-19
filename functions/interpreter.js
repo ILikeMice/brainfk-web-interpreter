@@ -5,7 +5,7 @@ const app = express();
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-    let code = req.query.code
+    let code = req.query.code.trim()
     let input = req.query.input
 
     class Token {
