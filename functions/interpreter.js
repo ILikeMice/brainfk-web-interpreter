@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
     let code = req.query.code.trim();
-    let input = req.query.input;
+    let input = req.query.input || ""; 
 
     class Token {
         constructor(type, value = null) {
