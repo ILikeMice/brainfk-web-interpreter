@@ -77,7 +77,7 @@ router.get("/", async (req, res) => {
                                 used.push(i, b);
                                 break;
                             }
-                        }
+                        }   
                     }
                 }
             }
