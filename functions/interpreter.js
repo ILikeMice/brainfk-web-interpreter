@@ -40,7 +40,7 @@ router.get("/", async (req, res) => {
             }
     
             let current_char = text[this.pos];
-    
+            console.log(current_char)
             if (["+", "-", ">", "<", "[", "]", ",", "."].includes(current_char)) {
                 this.pos++;
                 return new Token(current_char, current_char);
@@ -89,7 +89,7 @@ router.get("/", async (req, res) => {
             let output = "";
             let usrinput = this.input; // add the input from get req here
             this.current_token = this.next_token();
-    
+            console.log(this.current_token)
             while (this.current_token.type != "EOF") {
                 let currtokentype = this.current_token.type;
                 if (currtokentype == "]") {
