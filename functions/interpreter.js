@@ -12,6 +12,7 @@ class Token {
 
 class Interpreter {
     constructor(text, inp) {
+        console.log("text", text)
         this.input = inp || ""; // Default to an empty string if input is not provided
         this.text = text;
         this.pos = 0;
@@ -36,9 +37,11 @@ class Interpreter {
         }
 
         let current_char = text[this.pos];
-
+        console.log("txt", text)
+        console.log("char", current_char)
         if (["+", "-", ">", "<", "[", "]", ",", "."].includes(current_char)) {
             this.pos++;
+
             return new Token(current_char, current_char);
         } else {
             this.pos++; // Skip invalid characters
@@ -83,11 +86,13 @@ class Interpreter {
     expr() {
         this.find_loops();
         let output = "";
-        let usrinput = this.input;
+        
         this.current_token = this.next_token();
 
         while (this.current_token && this.current_token.type != "EOF") {
+            
             let currtokentype = this.current_token.type;
+            console.log(currtokentype)
             if (currtokentype == "]") {
                 if (
                     this.loops.hasOwnProperty(this.pos - 1) &&
@@ -98,6 +103,7 @@ class Interpreter {
             }
 
             if (currtokentype == "+") {
+                console.log("PLUS SPOTTED 0o0   ")
                 this.memory[this.current_pointer]++;
             }
 
@@ -112,8 +118,10 @@ class Interpreter {
             }
 
             if (currtokentype == ",") {
-                if (usrinput.length > 0) {
-                    this.memory[this.current_pointer] = usrinput.shift().charCodeAt(0);
+                if (this.input.length > 0) {
+                    this.memory[this.current_pointer] = this.input[0].charCodeAt();
+                    this.input = this.input.replace(/^./, "")
+                    console.log(this.input)
                 } else {
                     this.memory[this.current_pointer] = 0; 
                 }

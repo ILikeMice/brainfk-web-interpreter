@@ -13,9 +13,16 @@ separator.addEventListener("mousedown", (e) => {
 
 runBtn.addEventListener("click", async function () {
     output.innerHTML = "";
-    let res = await fetch("/interpreter");
+    let code = document.getElementById("code").value.replace(/\+/g, '%2B')
+    let input = document.getElementById("inputtext").value
+    console.log(code)
+    let res = await fetch(`/.netlify/functions/interpreter?code=${code}&input=${input}`)
+
+    res.text().then(function(text){
+        console.log(text)
+        output.innerText = text
+    })
     
-    console.log(res);
 });
 
 function resize(e) {

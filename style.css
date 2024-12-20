@@ -19,6 +19,7 @@ body, html {
     width: 100%;
     background-color: black;
 
+    flex-direction: column;
     overflow: hidden;
     border-radius: 3px;
 }
@@ -138,4 +139,18 @@ button {
 #inputtext {
     height: 25px;
     width: 100%;
+}
+
+.filebar {
+    width: 100%;
+    height: 5%;
+    background-color: blue;
+}
+
+.codespacewrapper {
+    width: 100%;
+    height: 95%;
+    
+    display: flex;
+    flex-direction: row;
 }
