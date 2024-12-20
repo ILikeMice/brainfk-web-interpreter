@@ -88,6 +88,7 @@ class Interpreter {
 
         while (this.current_token && this.current_token.type != "EOF") {
             let currtokentype = this.current_token.type;
+            console.log(currtokentype)
             if (currtokentype == "]") {
                 if (
                     this.loops.hasOwnProperty(this.pos - 1) &&
@@ -145,6 +146,7 @@ router.get("/", async (req, res) => {
 
     try {
         const result = new Interpreter(code, input).expr();
+        console.log(result)
         res.send(result);
     } catch (error) {
         console.error("Error during interpretation:", error);
