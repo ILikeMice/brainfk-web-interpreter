@@ -243,7 +243,7 @@ button {
 .dropcontent {
     position: relative;
 
-    height: 180px;
+    max-height: 0;
     width: 100%;
     background-color: white;
 
@@ -251,5 +251,43 @@ button {
 
     border-radius: 0 0 10px 10px;
 
+
+    display: flex;
+    flex-direction: column;
+
     z-index: 1;
+
+    transition: 0.3s all ease-in-out;
+}
+
+.dropcontent button {
+    height: 20px;
+    width: 100%;
+
+    font-family: monospace;
+
+    background-color: transparent;
+    border: none;
+}
+
+.dropcontent button:hover {
+    background-color: #aaa;
+}
+
+.catfunction {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100px;
+    overflow: visible;
+}
+
+#cat {
+    position: absolute;
+    z-index: -1;
+    left: 0;
+    width: 200px;
+    height: 20px;
+    background-color: rgb(249, 0, 0);
+    transition: 5s all ease-in-out;  
 }
