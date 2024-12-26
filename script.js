@@ -8,6 +8,10 @@ const runBtn = document.getElementById("runbtn");
 const files = document.getElementsByClassName("filediv");
 const addfilebtn = document.getElementById("addfilebtn");
 const cat = document.getElementById("cat");
+const themebtn = document.getElementById("themebtn");
+
+let catstate = false;
+let stoneaudio = false;
 
 var currentfile;
 var selectedfile = 1;
@@ -23,44 +27,75 @@ separator.addEventListener("mousedown", (e) => {
     document.addEventListener("mouseup", stopResize);
 });
 
-let controller = new AbortController(); // Create a new AbortController instance
-let signal = controller.signal; // Get the signal from the controller
+function toggleTheme() {
+    if (document.body.style.backgroundColor != "white") {
+        document.body.style.backgroundColor = "white";
+        themebtn.style.backgroundColor = "#333";
+        themebtn.style.color = "lightgray";
+        themebtn.style.borderColor = "#333";
+
+        inputtext.style.backgroundColor = "unset"
+        inputtext.style.color = "black"
+        inputtext.style.border = "2px solid gray"
+        inputtext.style.borderRadius = "3px"
+
+        runBtn.style.backgroundColor = "white"
+    } else {
+        document.body.style.backgroundColor = "#333";
+        themebtn.style.backgroundColor = "lightgray";
+        themebtn.style.color = "#333";
+        themebtn.style.borderColor = "lightgray";
+
+        inputtext.style.backgroundColor = "black"
+        inputtext.style.color = "white"
+
+        runBtn.style.backgroundColor = "black"
+    }
+}
+
+function txtToBrainfk() {
+    console.log(123);
+    let text = inputtext.value;
+    let output = "";
+    for (let i = 0; i < text.length; i++) {
+        const char = text[i].charCodeAt();
+        const sqrt = Math.round(Math.sqrt(char));
+        var excess;
+        if (char - sqrt ** 2 > 0) {
+            excess = "+";
+        } else {
+            excess = "-";
+        }
+        output += `${"+".repeat(sqrt)}[${
+            ">".repeat(i + 1) + "+".repeat(sqrt) + "<".repeat(i + 1)
+        }-]${
+            ">".repeat(i + 1) +
+            excess.repeat(Math.abs(char - sqrt ** 2)) +
+            "." +
+            "<".repeat(i + 1)
+        }\n`;
+        console.log(char, sqrt, output);
+    }
+    navigator.clipboard.writeText(output).then(function () {
+        alert("Copied code to clipboard!");
+    });
+}
 
 async function runCode() {
     output.innerHTML = "";
 
-    let codetxt = code.value.replace(/\+/g, "%2B");
+    let codetxt = code.value;
     let input = inputtext.value;
+    let interpreter = new Interpreter(codetxt, input);
     console.log(code);
 
     try {
-        let res = await fetch(
-            `/.netlify/functions/interpreter?code=${codetxt}&input=${input}`,
-            { signal: signal }
-        );
-
-        let text = await res.text();
-        console.log(text);
-        output.innerText = text;
+        const res = interpreter.expr();
+        output.innerText = res;
     } catch (error) {
-        if (error.name === 'AbortError') {
-            console.log('Fetch aborted');
-        } else {
-            console.error('Fetch error:', error);
-        }
+        console.log("error!:", error)
     }
-};
-
-function stopCode() {
-    console.log("Aborted!");
-    controller.abort();
-    output.value = "Stopped!";
-
-    // Create a new AbortController for the next fetch operation
-    controller = new AbortController();
-    signal = controller.signal;
 }
-
 
 document.addEventListener("mousedown", function (e) {
     //console.log("currentfile:", currentfile)
@@ -364,6 +399,7 @@ function importFile(usrdata, filename) {
 }
 
 async function showCat() {
+    let audio = new Audio("./stone.mp3");
     let cat = document.getElementById("cat");
     var containerwrapper = document.getElementById("container");
     let space = containerwrapper.getBoundingClientRect().left;
@@ -373,16 +409,48 @@ async function showCat() {
         window.innerWidth
     );
     const delay = (ms) => new Promise((res) => setTimeout(res, ms));
-    if (cat.style.left == 0) {
+    if (!catstate) {
         cat.style.left = "-" + space + "px";
-
+        if (!stoneaudio) {
+            audio.play();
+            stoneaudio = true;
+            setTimeout(function () {
+                stoneaudio = false;
+                console.log(123);
+            }, 2800);
+        }
         await delay(5000);
-
         cat.style.height = space + "px";
+        if (!stoneaudio) {
+            audio.play();
+            stoneaudio = true;
+            setTimeout(function () {
+                stoneaudio = false;
+                console.log(123);
+            }, 2800);
+        }
+        catstate = true;
     } else {
         console.log("shrinking");
         cat.style.height = "20px";
+        if (!stoneaudio) {
+            audio.play();
+            stoneaudio = true;
+            setTimeout(function () {
+                stoneaudio = false;
+                console.log(123);
+            }, 2800);
+        }
         await delay(5000);
         cat.style.left = "0";
+        if (!stoneaudio) {
+            audio.play();
+            stoneaudio = true;
+            setTimeout(function () {
+                stoneaudio = false;
+                console.log(123);
+            }, 2800);
+        }
+        catstate = false;
     }
 }

@@ -5,20 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brainfuck Interpreter</title>
     <link rel="stylesheet" href="style.css">
+    <script src="localinterpreter.js"></script>
     <script src="script.js" defer></script>
 </head>
-<body style="padding: 0; margin: 0; overflow: hidden;" onload='document.getElementById("cat").style.width = document.getElementById("container").getBoundingClientRect().left + "px"'>
+<body style="padding: 0; margin: 0; overflow: hidden; background-color: rgb(56, 56, 56); transition: 0.5s all ease-in-out;" onload='document.getElementById("cat").style.width = document.getElementById("container").getBoundingClientRect().left + "px"'>
     <div class="containerwrapper">
         <div style=" height: 30px; width: 100%; background-color: transparent; vertical-align: middle; padding-bottom: 10px; overflow: hidden; display: flex; flex-direction: row;">
             <button id="runbtn" onclick="runCode();">Run</button>
-            <button id="stopbtn" onclick="stopCode()">Stop</button>
             <input type="text" id="inputtext" placeholder="Input..." >
+            <button id="themebtn" onclick="toggleTheme()">Theme</button>
         </div>
         <div id="container" class="container">
             <div id="functionbar">
                 <div class="functiondiv catfunction">
                     <img id="cat" src="./cat (1).jpg">
-                    <button class="functionbtn" onclick="showCat()">toggle cat</button>
+                    <button class="functionbtn" style="width: 200px;" onclick="showCat()">toggle cat (dont spam!)</button>
                     
                 </div>
 
@@ -32,9 +33,13 @@
                 <div class="functiondiv">
                     <button class="functionbtn" onclick="document.getElementById('fileinput').click()">Import</button>
                 </div>
+                <div class="functiondiv">
+                    <button class="functionbtn" onclick="txtToBrainfk()">Input to Brainfk...</button>
+                </div>
                 
                 <input type="file" id="fileinput" style="display: none;" onchange='importFile(this, this.files[0].name)'>
             </div>
+
             <div id="filebar">
                 <div class="filediv" id="1">main.bf</div>
                 <button id="addfilebtn">+</button>

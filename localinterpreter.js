@@ -1,8 +1,4 @@
-const express = require("express");
-const serverless = require("serverless-http");
-
-const app = express();
-const router = express.Router();
+let running = true
 
 class Token {
     constructor(type) {
@@ -13,9 +9,9 @@ class Token {
 class Interpreter {
     constructor(text, inp) {
         console.log("text", text)
-        this.input = inp || ""; // Default to an empty string if input is not provided
-        this.text = text;
         this.starttime = Date.now()
+        this.input = inp || "";
+        this.text = text;
         this.pos = 0;
         this.current_token = null;
         this.loops = {};
@@ -26,6 +22,15 @@ class Interpreter {
         };
     }
 
+    makeError(num) {
+        switch (num) {
+            case 1:
+                return console.error("Unclosed loop found!")
+        
+            default:
+                break;
+        }
+    }
 
     next_token() {
         let text = this.text;
@@ -52,8 +57,8 @@ class Interpreter {
         let pointer = 0;
         let code = this.text;
         let startends = 0;
-
         for (let i = 0; i < code.length; i++) {
+            
             if (code[i] == ">") {
                 pointer++;
             } else if (code[i] == "<") {
@@ -79,8 +84,9 @@ class Interpreter {
                 }
             }
         }
-
-       
+        if (startends != 0) {
+            this.makeError(1)
+        }
     }
 
     expr() {
@@ -90,13 +96,11 @@ class Interpreter {
         this.current_token = this.next_token();
 
         while (this.current_token && this.current_token.type != "EOF") {
-            
             if (Date.now() - this.starttime > (100 + this.text.length / 5)) {
                 console.log("timeout")
                 
                 return "Function Timeout, infinite loop?";
             }
-
             let currtokentype = this.current_token.type;
             console.log(currtokentype)
             if (currtokentype == "]") {
@@ -109,7 +113,7 @@ class Interpreter {
             }
 
             if (currtokentype == "+") {
-                console.log("PLUS SPOTTED 0o0   ")
+                console.log("PLUS SPOTTED 0o0")
                 this.memory[this.current_pointer]++;
             }
 
@@ -129,7 +133,8 @@ class Interpreter {
                     this.input = this.input.replace(/^./, "")
                     console.log(this.input)
                 } else {
-                    this.memory[this.current_pointer] = 0; 
+                    this.memory[this.current_pointer] = 0;
+                    console.error("Not enough Input! Set current value to 0!") 
                 }
             }
 
@@ -152,20 +157,3 @@ class Interpreter {
         return output;
     }
 }
-
-router.get("/", async (req, res) => {
-    let code = req.query.code ? req.query.code.trim() : "";
-    let input = req.query.input || "";
-
-    try {
-        const result = new Interpreter(code, input).expr();
-        console.log(result)
-        res.send(result);
-    } catch (error) {
-        console.error("Error during interpretation:", error);
-        res.status(500).send("An error occurred during code interpretation:", error);
-    }
-});
-
-app.use("/.netlify/functions/interpreter", router);
-module.exports.handler = serverless(app);           

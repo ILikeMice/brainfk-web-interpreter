@@ -124,6 +124,7 @@ button {
 #runbtn {
     border: 1px solid #00a65a;
     color: #008d4c;
+    background-color: #333;
 }
 
 #runbtn:hover {
@@ -131,19 +132,20 @@ button {
     color: white;
 }
 
-#stopbtn {
-    color: #dd4b39;
-    border: 1px solid #d73925;
-}
-
-#stopbtn:hover {
-    background-color: #d73925;
-    color: white;
+#themebtn {
+    border: 1px solid lightgray;
+    color: rgb(56, 56, 56);
+    background-color: lightgray;
 }
 
 #inputtext {
     height: 25px;
     width: 100%;
+
+    background-color: black;
+    color: white;
+
+    transition: 0.5s all ease-in-out;
 }
 
 #filebar {
@@ -278,7 +280,7 @@ button {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    width: 100px;
+    width: 200px;
     overflow: visible;
 }
 
@@ -289,5 +291,6 @@ button {
     width: 200px;
     height: 20px;
     background-color: rgb(249, 0, 0);
-    transition: 5s all ease-in-out;  
+    transition: 2.8s all linear;
+      
 }
