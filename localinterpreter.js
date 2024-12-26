@@ -134,7 +134,7 @@ class Interpreter {
                     console.log(this.input)
                 } else {
                     this.memory[this.current_pointer] = 0;
-                    console.error("Not enough Input! Set current value to 0!") 
+                    console.error("Not enough Input! Current value set to 0!") 
                 }
             }
 

@@ -290,7 +290,7 @@ button {
     left: 0;
     width: 200px;
     height: 20px;
-    background-color: rgb(249, 0, 0);
+    background-color: transparent;
     transition: 2.8s all linear;
       
 }
